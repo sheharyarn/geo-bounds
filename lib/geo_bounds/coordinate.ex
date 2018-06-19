@@ -20,11 +20,11 @@ defmodule GeoBounds.Coordinate do
 
 
   @doc "Return a new struct for given lat/longs"
-  def new!({long, lat}) do
-    new!(long, lat)
+  def new({long, lat}) do
+    new(long, lat)
   end
 
-  def new!(long, lat) do
+  def new(long, lat) do
     validate_latitude!(lat)
     validate_longitude!(long)
 
