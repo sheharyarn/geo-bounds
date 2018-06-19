@@ -1,6 +1,6 @@
 defmodule GeoBounds.BoundedBox do
   defmodule InvalidData, do: defexception [:message]
-  defstruct [:latitude, :longitude]
+  defstruct [:top, :bottom, :left, :right]
 
   alias GeoBounds.Coordinate
   alias GeoBounds.BoundedBox
@@ -21,6 +21,10 @@ defmodule GeoBounds.BoundedBox do
 
   @doc "Return a new Bounded Box"
   def new(%Coordinate{} = c1, %Coordinate{} = c2) do
+    {bottom, top} = minimax(c1.latitude,  c2.latitude)
+    {left, right} = minimax(c1.longitude, c2.longitude)
+
+    %BoundedBox{top: top, bottom: bottom, left: left, right: right}
   end
 
   def new(_, _) do
@@ -30,7 +34,24 @@ defmodule GeoBounds.BoundedBox do
 
 
   @doc "Check if a coordinate lies inside a bbox"
-  def inside?(%BoundedBox{} = box, %Coordinate{} = c) do
+  def inside?(%BoundedBox{} = box, %Coordinate{} = point) do
+    (point.latitude  <= box.top)    &&
+    (point.latitude  >= box.bottom) &&
+    (point.longitude <= box.right)  &&
+    (point.longitude >= box.left)
   end
+
+
+
+
+  # Private Helpers
+  # ---------------
+
+
+  # Get the min and max of two numbers
+  defp minimax(x, y) when is_number(x) and is_number(y) do
+    {min(x, y), max(x, y)}
+  end
+
 
 end
