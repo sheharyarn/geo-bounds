@@ -31,7 +31,7 @@ defmodule GeoBounds.Tests.BoundedBox do
 
 
 
-  describe "#in?" do
+  describe "#inside?" do
     setup do
       top_right   = Coordinate.new(48.819864, 2.481386)
       bottom_left = Coordinate.new(48.799860, 2.461385)

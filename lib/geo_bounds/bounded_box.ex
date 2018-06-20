@@ -33,7 +33,7 @@ defmodule GeoBounds.BoundedBox do
 
 
 
-  @doc "Check if a coordinate lies inside a bbox"
+  @doc "Check if a coordinate lies inside a bounded box"
   def inside?(%BoundedBox{} = box, %Coordinate{} = point) do
     (point.latitude  <= box.top)    &&
     (point.latitude  >= box.bottom) &&
