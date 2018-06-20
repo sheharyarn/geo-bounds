@@ -19,12 +19,16 @@ defmodule GeoBounds.BoundedBox do
   # ----------
 
 
-  @doc "Return a new Bounded Box"
+  @doc "Return a new Bounded Box for given coordinates"
   def new(%Coordinate{} = c1, %Coordinate{} = c2) do
     {bottom, top} = minimax(c1.latitude,  c2.latitude)
     {left, right} = minimax(c1.longitude, c2.longitude)
 
     %BoundedBox{top: top, bottom: bottom, left: left, right: right}
+  end
+
+  def new({_, _} = c1, {_, _} = c2) do
+    new(Coordinate.new(c1), Coordinate.new(c2))
   end
 
   def new(_, _) do

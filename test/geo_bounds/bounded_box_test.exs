@@ -27,6 +27,21 @@ defmodule GeoBounds.Tests.BoundedBox do
       assert box.bottom == @bottom_left.latitude
       assert box.left   == @bottom_left.longitude
     end
+
+
+    @top_right   {78, 34}
+    @bottom_left {75, 32}
+    test "works for coordinates in tuple form" do
+      {right, top}   = @top_right
+      {left, bottom} = @bottom_left
+
+      assert box = %BoundedBox{} = BoundedBox.new(@top_right, @bottom_left)
+
+      assert box.top    == top
+      assert box.right  == right
+      assert box.bottom == bottom
+      assert box.left   == left
+    end
   end
 
 
