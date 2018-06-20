@@ -24,7 +24,7 @@ defmodule GeoBounds.BoxServer do
 
 
   @doc "Add a new bounding box to the server"
-  def add(%BoundingBox{} = box) do
+  def add(%BoundedBox{} = box) do
     GenServer.cast(__MODULE__, {:add, box})
   end
 
