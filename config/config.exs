@@ -8,6 +8,11 @@ use Mix.Config
 # if you want to provide default values for your application for
 # 3rd-party users, it should be done in your "mix.exs" file.
 
+
+config :geo_bounds,
+  env: Mix.env
+
+
 # You can configure your application as:
 #
 #     config :geo_bounds, key: :value
