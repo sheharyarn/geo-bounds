@@ -15,7 +15,10 @@ defmodule GeoBounds.MixProject do
 
 
   def application do
-    [extra_applications: [:logger]]
+    [
+      mod: {GeoBounds, []},
+      extra_applications: [:logger],
+    ]
   end
 
 

@@ -9,7 +9,7 @@ defmodule GeoBounds.Tests.BoxServer do
 
 
   setup do
-    {:ok, pid} = BoxServer.start_link
+    {:ok, pid} = BoxServer.start_link([])
     %{pid: pid}
   end
 
