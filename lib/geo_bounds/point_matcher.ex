@@ -31,15 +31,17 @@ defmodule GeoBounds.PointMatcher do
 
   @doc "Match a point. If found, store it. If not, discard it."
   def match(%Location{} = point) do
-    GenServer.cast(__MODULE__, {:match, point})
+    GenServer.call(__MODULE__, {:match, point})
   end
 
 
 
   @doc "Match a point pair"
   def match(%Location{} = origin, %Location{} = destination) do
-    match(origin)
-    match(destination)
+    [
+      match(origin),
+      match(destination),
+    ]
   end
 
 
@@ -65,11 +67,12 @@ defmodule GeoBounds.PointMatcher do
 
 
 
-  # Handle cast for :match
+  # Handle call for :match
   @doc false
-  def handle_cast({:match, point}, map) do
+  def handle_call({:match, point}, _from, map) do
+    box = BoxServer.find(point)
     map =
-      if box = BoxServer.find(point) do
+      if box do
         Logger.debug("Saved #{point} against #{box}")
         Map.put(map, point, box)
       else
@@ -77,7 +80,7 @@ defmodule GeoBounds.PointMatcher do
         map
       end
 
-    {:noreply, map}
+    {:reply, box, map}
   end
 
 
