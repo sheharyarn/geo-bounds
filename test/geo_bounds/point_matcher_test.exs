@@ -25,19 +25,23 @@ defmodule GeoBounds.Tests.PointMatcher do
   describe "#match" do
     @point Location.new(-5, -5)
     test "discards point if no matching boundingbox is found"  do
-      assert %{} == Support.get_state(PointMatcher)
-      assert :ok == PointMatcher.match(@point)
-      assert %{} == Support.get_state(PointMatcher)
+      Support.capture_log fn ->
+        assert %{} == Support.get_state(PointMatcher)
+        assert :ok == PointMatcher.match(@point)
+        assert %{} == Support.get_state(PointMatcher)
+      end
     end
 
 
     @point Location.new(1, 1)
     @box BoundedBox.new({0, 2},  {2, 0})
     test "saves point with bounding box if matches" do
-      assert %{} == Support.get_state(PointMatcher)
-      assert :ok == PointMatcher.match(@point)
+      Support.capture_log fn ->
+        assert %{} == Support.get_state(PointMatcher)
+        assert :ok == PointMatcher.match(@point)
 
-      assert %{@point => @box} == Support.get_state(PointMatcher)
+        assert %{@point => @box} == Support.get_state(PointMatcher)
+      end
     end
 
 
@@ -58,7 +62,9 @@ defmodule GeoBounds.Tests.PointMatcher do
     end
 
     test "returns the internal map state of the process" do
-      assert Support.get_state(PointMatcher) == PointMatcher.list
+      Support.capture_log fn ->
+        assert Support.get_state(PointMatcher) == PointMatcher.list
+      end
     end
   end
 

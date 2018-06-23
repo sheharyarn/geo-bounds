@@ -58,4 +58,17 @@ defmodule GeoBounds.BoundedBox do
   end
 
 
+
+
+
+  # Protocol Implementation
+  # -----------------------
+
+  defimpl String.Chars, for: __MODULE__ do
+    def to_string(box) do
+      "#BoundedBox<left: #{box.left}, bottom: #{box.bottom}, right: #{box.right}, top: #{box.top}>"
+    end
+  end
+
+
 end

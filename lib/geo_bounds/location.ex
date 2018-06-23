@@ -58,4 +58,18 @@ defmodule GeoBounds.Location do
     end
   end
 
+
+
+
+
+  # Protocol Implementation
+  # -----------------------
+
+  defimpl String.Chars, for: __MODULE__ do
+    def to_string(point) do
+      "#Location<#{point.longitude}, #{point.latitude}>"
+    end
+  end
+
+
 end

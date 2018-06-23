@@ -9,4 +9,9 @@ defmodule GeoBounds.Tests.Support do
     :sys.get_state(pid)
   end
 
+
+  # Capture IO
+  defdelegate capture_io(fun),  to: ExUnit.CaptureIO
+  defdelegate capture_log(fun), to: ExUnit.CaptureLog
+
 end

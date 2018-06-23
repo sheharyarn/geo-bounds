@@ -70,8 +70,10 @@ defmodule GeoBounds.PointMatcher do
   def handle_cast({:match, point}, map) do
     map =
       if box = BoxServer.find(point) do
+        Logger.debug("Saved #{point} against #{box}")
         Map.put(map, point, box)
       else
+        Logger.debug("Discarded #{point} - No BoundedBox found")
         map
       end
 
