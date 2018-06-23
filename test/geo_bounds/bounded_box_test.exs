@@ -1,7 +1,7 @@
 defmodule GeoBounds.Tests.BoundedBox do
   use ExUnit.Case, async: true
 
-  alias GeoBounds.Coordinate
+  alias GeoBounds.Location
   alias GeoBounds.BoundedBox
 
 
@@ -12,13 +12,13 @@ defmodule GeoBounds.Tests.BoundedBox do
       end
 
       assert_raise BoundedBox.InvalidData, fn ->
-        BoundedBox.new(%Coordinate{longitude: 15, latitude: 42}, {17, 40})
+        BoundedBox.new(%Location{longitude: 15, latitude: 42}, {17, 40})
       end
     end
 
 
-    @top_right   %Coordinate{longitude: 78, latitude: 34}
-    @bottom_left %Coordinate{longitude: 75, latitude: 32}
+    @top_right   %Location{longitude: 78, latitude: 34}
+    @bottom_left %Location{longitude: 75, latitude: 32}
     test "returns a bounded_box struct for valid coordinates" do
       assert box = %BoundedBox{} = BoundedBox.new(@top_right, @bottom_left)
 
@@ -48,20 +48,20 @@ defmodule GeoBounds.Tests.BoundedBox do
 
   describe "#inside?" do
     setup do
-      top_right   = Coordinate.new(48.819864, 2.481386)
-      bottom_left = Coordinate.new(48.799860, 2.461385)
+      top_right   = Location.new(48.819864, 2.481386)
+      bottom_left = Location.new(48.799860, 2.461385)
 
       [box: BoundedBox.new(top_right, bottom_left)]
     end
 
 
-    @point Coordinate.new(48.803260, 2.479775)
+    @point Location.new(48.803260, 2.479775)
     test "returns true if the point lies inside the box", %{box: box} do
       assert BoundedBox.inside?(box, @point)
     end
 
 
-    @point Coordinate.new(48.847172, 2.386597)
+    @point Location.new(48.847172, 2.386597)
     test "returns false if the point lies outside the box", %{box: box} do
       refute BoundedBox.inside?(box, @point)
     end

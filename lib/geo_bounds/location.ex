@@ -1,8 +1,8 @@
-defmodule GeoBounds.Coordinate do
+defmodule GeoBounds.Location do
   defmodule InvalidData, do: defexception [:message]
   defstruct [:latitude, :longitude]
 
-  alias GeoBounds.Coordinate
+  alias GeoBounds.Location
 
 
   @moduledoc """
@@ -28,7 +28,7 @@ defmodule GeoBounds.Coordinate do
     validate_latitude!(lat)
     validate_longitude!(long)
 
-    %Coordinate{latitude: lat, longitude: long}
+    %Location{latitude: lat, longitude: long}
   end
 
 
@@ -44,7 +44,7 @@ defmodule GeoBounds.Coordinate do
     case is_number(lat) && (lat <= @latitude.max) && (lat >= @latitude.min) do
       true -> :ok
       false ->
-        raise Coordinate.InvalidData, message: "Invalid value for Latitude"
+        raise Location.InvalidData, message: "Invalid value for Latitude"
     end
   end
 
@@ -54,7 +54,7 @@ defmodule GeoBounds.Coordinate do
     case is_number(long) && (long <= @longitude.max) && (long >= @longitude.min) do
       true -> :ok
       false ->
-        raise Coordinate.InvalidData, message: "Invalid value for Longitude"
+        raise Location.InvalidData, message: "Invalid value for Longitude"
     end
   end
 

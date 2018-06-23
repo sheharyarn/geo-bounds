@@ -1,5 +1,5 @@
 alias GeoBounds.{
-  Coordinate,
+  Location,
   BoundedBox,
   BoxServer,
   Parser

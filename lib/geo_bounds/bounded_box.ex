@@ -2,7 +2,7 @@ defmodule GeoBounds.BoundedBox do
   defmodule InvalidData, do: defexception [:message]
   defstruct [:top, :bottom, :left, :right]
 
-  alias GeoBounds.Coordinate
+  alias GeoBounds.Location
   alias GeoBounds.BoundedBox
 
 
@@ -20,7 +20,7 @@ defmodule GeoBounds.BoundedBox do
 
 
   @doc "Return a new Bounded Box for given coordinates"
-  def new(%Coordinate{} = c1, %Coordinate{} = c2) do
+  def new(%Location{} = c1, %Location{} = c2) do
     {bottom, top} = minimax(c1.latitude,  c2.latitude)
     {left, right} = minimax(c1.longitude, c2.longitude)
 
@@ -28,7 +28,7 @@ defmodule GeoBounds.BoundedBox do
   end
 
   def new({_, _} = c1, {_, _} = c2) do
-    new(Coordinate.new(c1), Coordinate.new(c2))
+    new(Location.new(c1), Location.new(c2))
   end
 
   def new(_, _) do
@@ -38,7 +38,7 @@ defmodule GeoBounds.BoundedBox do
 
 
   @doc "Check if a coordinate lies inside a bounded box"
-  def inside?(%BoundedBox{} = box, %Coordinate{} = point) do
+  def inside?(%BoundedBox{} = box, %Location{} = point) do
     (point.latitude  <= box.top)    &&
     (point.latitude  >= box.bottom) &&
     (point.longitude <= box.right)  &&

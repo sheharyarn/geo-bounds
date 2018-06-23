@@ -1,7 +1,8 @@
 defmodule GeoBounds.PointMatcher do
   use GenServer
+  require Logger
 
-  alias GeoBounds.Coordinate
+  alias GeoBounds.Location
   alias GeoBounds.BoxServer
 
 
@@ -29,14 +30,14 @@ defmodule GeoBounds.PointMatcher do
 
 
   @doc "Match a point. If found, store it. If not, discard it."
-  def match(%Coordinate{} = point) do
+  def match(%Location{} = point) do
     GenServer.cast(__MODULE__, {:match, point})
   end
 
 
 
   @doc "Match a point pair"
-  def match(%Coordinate{} = origin, %Coordinate{} = destination) do
+  def match(%Location{} = origin, %Location{} = destination) do
     match(origin)
     match(destination)
   end

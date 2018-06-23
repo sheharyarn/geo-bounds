@@ -1,7 +1,7 @@
 defmodule GeoBounds.BoxServer do
   use GenServer
 
-  alias GeoBounds.Coordinate
+  alias GeoBounds.Location
   alias GeoBounds.BoundedBox
 
 
@@ -32,7 +32,7 @@ defmodule GeoBounds.BoxServer do
 
 
   @doc "Find a box inside which the given point lies in"
-  def find(%Coordinate{} = point) do
+  def find(%Location{} = point) do
     GenServer.call(__MODULE__, {:find, point})
   end
 

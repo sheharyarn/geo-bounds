@@ -1,5 +1,5 @@
 defmodule GeoBounds.Parser do
-  alias GeoBounds.Coordinate
+  alias GeoBounds.Location
   alias GeoBounds.BoundedBox
   alias GeoBounds.BoxServer
 
@@ -31,7 +31,7 @@ defmodule GeoBounds.Parser do
     |> CSV.decode!                            # Parse as CSV
     |> Stream.drop(1)                         # Drop the header
     |> Stream.map(&parse_pair!/1)             # Convert to floats
-    |> Stream.map(&Coordinate.new/1)          # Convert to locations
+    |> Stream.map(&Location.new/1)          # Convert to locations
     |> Stream.chunk_every(2, 1, :discard)     # Make overlapping groups
     |> Stream.map(&create_boundedbox/1)       # Create Bounding Boxes
     |> Stream.map(&BoxServer.add/1)           # Save to BoxServer

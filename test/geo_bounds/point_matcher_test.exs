@@ -2,7 +2,7 @@ defmodule GeoBounds.Tests.PointMatcher do
   use ExUnit.Case, async: false
 
   alias GeoBounds.BoxServer
-  alias GeoBounds.Coordinate
+  alias GeoBounds.Location
   alias GeoBounds.BoundedBox
   alias GeoBounds.PointMatcher
   alias GeoBounds.Tests.Support
@@ -23,7 +23,7 @@ defmodule GeoBounds.Tests.PointMatcher do
 
 
   describe "#match" do
-    @point Coordinate.new(-5, -5)
+    @point Location.new(-5, -5)
     test "discards point if no matching boundingbox is found"  do
       assert %{} == Support.get_state(PointMatcher)
       assert :ok == PointMatcher.match(@point)
@@ -31,7 +31,7 @@ defmodule GeoBounds.Tests.PointMatcher do
     end
 
 
-    @point Coordinate.new(1, 1)
+    @point Location.new(1, 1)
     @box BoundedBox.new({0, 2},  {2, 0})
     test "saves point with bounding box if matches" do
       assert %{} == Support.get_state(PointMatcher)
@@ -50,9 +50,9 @@ defmodule GeoBounds.Tests.PointMatcher do
 
   describe "#list" do
     setup do
-      PointMatcher.match(Coordinate.new(1, 1))
-      PointMatcher.match(Coordinate.new(2, 2))
-      PointMatcher.match(Coordinate.new(3, 3))
+      PointMatcher.match(Location.new(1, 1))
+      PointMatcher.match(Location.new(2, 2))
+      PointMatcher.match(Location.new(3, 3))
 
       :ok
     end

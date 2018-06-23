@@ -2,7 +2,7 @@ defmodule GeoBounds.Tests.BoxServer do
   use ExUnit.Case, async: false
 
   alias GeoBounds.BoxServer
-  alias GeoBounds.Coordinate
+  alias GeoBounds.Location
   alias GeoBounds.BoundedBox
   alias GeoBounds.Tests.Support
 
@@ -43,13 +43,13 @@ defmodule GeoBounds.Tests.BoxServer do
     end
 
 
-    @point Coordinate.new(5, 5)
+    @point Location.new(5, 5)
     test "returns a box if given point is inside one", %{box: box} do
       assert BoxServer.find(@point) == box
     end
 
 
-    @point Coordinate.new(10, 10)
+    @point Location.new(10, 10)
     test "returns nil if point isn't inside any box" do
       refute BoxServer.find(@point)
     end
