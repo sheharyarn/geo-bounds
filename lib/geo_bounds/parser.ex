@@ -2,6 +2,7 @@ defmodule GeoBounds.Parser do
   alias GeoBounds.Location
   alias GeoBounds.BoundedBox
   alias GeoBounds.BoxServer
+  alias GeoBounds.PointMatcher
 
 
   @moduledoc """
@@ -31,7 +32,7 @@ defmodule GeoBounds.Parser do
     |> CSV.decode!                            # Parse as CSV
     |> Stream.drop(1)                         # Drop the header
     |> Stream.map(&parse_pair!/1)             # Convert to floats
-    |> Stream.map(&Location.new/1)          # Convert to locations
+    |> Stream.map(&Location.new/1)            # Convert to coordinates
     |> Stream.chunk_every(2, 1, :discard)     # Make overlapping groups
     |> Stream.map(&create_boundedbox/1)       # Create Bounding Boxes
     |> Stream.map(&BoxServer.add/1)           # Save to BoxServer
@@ -39,6 +40,21 @@ defmodule GeoBounds.Parser do
   end
 
 
+
+  @doc """
+  Reads a CSV of coordinates, compares them against boxes
+  previously stored and saves the point if it matches
+  """
+  def match_points!(file \\ @file_coordinates) do
+    file
+    |> File.stream!                           # Stream the file
+    |> CSV.decode!                            # Parse as CSV
+    |> Stream.drop(1)                         # Drop the header
+    |> Stream.map(&parse_pair!/1)             # Convert to floats
+    |> Stream.map(&Location.new/1)            # Convert to coordinates
+    |> Stream.map(&PointMatcher.match/1)      # Match points against saved boxes
+    |> Stream.run                             # Execute Stream
+  end
 
 
 
