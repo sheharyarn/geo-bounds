@@ -1,5 +1,5 @@
 defmodule GeoBounds.Tests.BoxServer do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
 
   alias GeoBounds.BoxServer
   alias GeoBounds.Coordinate

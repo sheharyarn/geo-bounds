@@ -23,6 +23,7 @@ defmodule GeoBounds do
 
 
 
+
   # Private Helpers
   # ---------------
 
@@ -30,6 +31,7 @@ defmodule GeoBounds do
   defp children(_env) do
     [
       GeoBounds.BoxServer,
+      GeoBounds.PointMatcher,
     ]
   end
 

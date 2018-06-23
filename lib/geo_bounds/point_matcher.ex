@@ -2,7 +2,6 @@ defmodule GeoBounds.PointMatcher do
   use GenServer
 
   alias GeoBounds.Coordinate
-  alias GeoBounds.BoundedBox
   alias GeoBounds.BoxServer
 
 
@@ -48,6 +47,36 @@ defmodule GeoBounds.PointMatcher do
   def list do
     GenServer.call(__MODULE__, :list)
   end
+
+
+
+
+
+  ## Callbacks
+  ## ---------
+
+
+  # Initialize State with empty map
+  @doc false
+  def init(:ok) do
+    {:ok, %{}}
+  end
+
+
+
+  # Handle cast for :match
+  @doc false
+  def handle_cast({:match, point}, map) do
+    map =
+      if box = BoxServer.find(point) do
+        Map.put(map, point, box)
+      else
+        map
+      end
+
+    {:noreply, map}
+  end
+
 
 end
 
