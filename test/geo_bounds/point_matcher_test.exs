@@ -48,5 +48,19 @@ defmodule GeoBounds.Tests.PointMatcher do
 
 
 
+  describe "#list" do
+    setup do
+      PointMatcher.match(Coordinate.new(1, 1))
+      PointMatcher.match(Coordinate.new(2, 2))
+      PointMatcher.match(Coordinate.new(3, 3))
+
+      :ok
+    end
+
+    test "returns the internal map state of the process" do
+      assert Support.get_state(PointMatcher) == PointMatcher.list
+    end
+  end
+
 end
 

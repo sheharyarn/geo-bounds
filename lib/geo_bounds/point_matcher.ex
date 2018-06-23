@@ -78,6 +78,14 @@ defmodule GeoBounds.PointMatcher do
   end
 
 
+
+  # Handle call for :list
+  @doc false
+  def handle_call(:list, _from, map) do
+    {:reply, map, map}
+  end
+
+
 end
 
 
