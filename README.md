@@ -72,15 +72,18 @@ points stored in the `priv/data/` directory.
 # Populate BoxServer with an initial list of bounding boxes
 # in `pairs.csv`
 Parser.read_pairs!
+# => :ok
 
 
 # Read all location points in `coordinates.csv` and match
 # them against the previously created bounding boxes
 Parser.match_points!
+# => :ok
 
 
-# Get a list of all points and their matching boxes
+# Get a map of all points and their matching boxes
 PointMatcher.list
+# => %{...}
 
 
 # Match boxes for another pair of points
@@ -88,7 +91,7 @@ origin      = Location.new(120.9724, 14.7462)
 destination = Location.new(120.8917, 14.6364)
 
 PointMatcher.match(origin, destination)
-# => [ %BoundedBox{...}, nil ]
+# => { %BoundedBox{...}, nil }
 ```
 
 
