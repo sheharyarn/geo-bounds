@@ -48,8 +48,41 @@ BoxServer.add(BoundedBox.new({4, 6},  {6, 4}))
 BoxServer.add(BoundedBox.new({8, 10}, {10, 8}))
 
 # Find a box for given points
-BoxServer.find(Location.new(1, 1))    # => %BoundedBox{ ... }
-BoxServer.find(Location.new(2, 2))    # => %BoundedBox{ ... }
+BoxServer.find(Location.new(1, 1))    # => %BoundedBox{...}
+BoxServer.find(Location.new(2, 2))    # => %BoundedBox{...}
 BoxServer.find(Location.new(3, 3))    # => nil
 ```
 
+
+`PointMatcher` acts as a higher level layer, by building on top of the
+`BoxServer`. You can match a single point or a pair of `origin, destination`
+points using `match/1` or `match/2`. If a box exists that contains a given
+point, it will store a reference to the `BoundedBox` against the point and
+return the value, otherwise it will simply discard the point returning `nil`.
+You can get a list of all matched points using `list/0`.
+
+Finally, there is a `Parser` helper module that adds and matches location
+points stored in the `priv/data/` directory.
+
+```elixir
+# Populate BoxServer with an initial list of bounding boxes
+# in `pairs.csv`
+Parser.read_pairs!
+
+
+# Read all location points in `coordinates.csv` and match
+# them against the previously created bounding boxes
+Parser.match_points!
+
+
+# Get a list of all points and their matching boxes
+PointMatcher.list
+
+
+# Match boxes for another pair of points
+origin      = Location.new(120.9724, 14.7462)
+destination = Location.new(120.8917, 14.6364)
+
+PointMatcher.match(origin, destination)
+# => [ %BoundedBox{...}, nil ]
+```
