@@ -38,10 +38,10 @@ defmodule GeoBounds.PointMatcher do
 
   @doc "Match a point pair"
   def match(%Location{} = origin, %Location{} = destination) do
-    [
+    {
       match(origin),
       match(destination),
-    ]
+    }
   end
 
 

@@ -27,7 +27,7 @@ defmodule GeoBounds.Tests.PointMatcher do
     test "discards point if no matching boundingbox is found"  do
       Support.capture_log fn ->
         assert %{} == Support.get_state(PointMatcher)
-        assert :ok == PointMatcher.match(@point)
+        assert nil == PointMatcher.match(@point)
         assert %{} == Support.get_state(PointMatcher)
       end
     end
@@ -37,10 +37,23 @@ defmodule GeoBounds.Tests.PointMatcher do
     @box BoundedBox.new({0, 2},  {2, 0})
     test "saves point with bounding box if matches" do
       Support.capture_log fn ->
-        assert %{} == Support.get_state(PointMatcher)
-        assert :ok == PointMatcher.match(@point)
+        assert %{}  == Support.get_state(PointMatcher)
+        assert @box == PointMatcher.match(@point)
 
         assert %{@point => @box} == Support.get_state(PointMatcher)
+      end
+    end
+
+
+    @p1 Location.new(1, 1)
+    @p2 Location.new(3, 3)
+    @b1 BoundedBox.new({0, 2}, {2, 0})
+    @b2 nil
+    test "works for origin, destination pairs" do
+      Support.capture_log fn ->
+        assert {b1, b2} = PointMatcher.match(@p1, @p2)
+        assert b1 == @b1
+        assert b2 == @b2
       end
     end
 
@@ -54,9 +67,11 @@ defmodule GeoBounds.Tests.PointMatcher do
 
   describe "#list" do
     setup do
-      PointMatcher.match(Location.new(1, 1))
-      PointMatcher.match(Location.new(2, 2))
-      PointMatcher.match(Location.new(3, 3))
+      Support.capture_log fn ->
+        PointMatcher.match(Location.new(1, 1))
+        PointMatcher.match(Location.new(2, 2))
+        PointMatcher.match(Location.new(3, 3))
+      end
 
       :ok
     end
