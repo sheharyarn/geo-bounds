@@ -4,6 +4,8 @@ GeoBounds
 > Experiments with Axis-aligned Bounding Boxes in Elixir
 
 
+
+
 ## Start
 
 ```bash
@@ -11,6 +13,8 @@ $ mix deps.get
 $ mix compile
 $ iex -S mix
 ```
+
+
 
 
 ## Usage
@@ -86,3 +90,34 @@ destination = Location.new(120.8917, 14.6364)
 PointMatcher.match(origin, destination)
 # => [ %BoundedBox{...}, nil ]
 ```
+
+
+
+
+## Testing and Contributing
+
+The app consists of a very modest test suite. You can run them with mix:
+
+```bash
+$ mix test
+```
+
+You can also help by contributing to the project:
+
+ - [Fork][github-fork], Enhance, Send PR
+ - Lock issues with any bugs or feature requests
+ - Implement something from Roadmap
+ - Spread the word :heart:
+
+
+
+
+
+## License
+
+The code is available as open source under the terms of the [MIT License][license].
+
+
+  [license]:     https://opensource.org/licenses/MIT
+  [github-fork]: https://github.com/sheharyarn/geo-bounds/fork
+
